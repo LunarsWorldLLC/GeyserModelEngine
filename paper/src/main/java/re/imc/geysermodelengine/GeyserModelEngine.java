@@ -55,7 +55,8 @@ public class GeyserModelEngine extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.modelManager.removeEntities();
+        // modelManager is still null when onEnable aborted early (e.g. no ModelEngine/BetterModel installed)
+        if (this.modelManager != null) this.modelManager.removeEntities();
 
         PacketEvents.getAPI().terminate();
         CommandAPI.onDisable();
