@@ -17,8 +17,6 @@ dependencies:
   server:
     GeyserUtils:
       required: true
-    packetevents:
-      required: true
     floodgate:
       required: false
     ModelEngine:
