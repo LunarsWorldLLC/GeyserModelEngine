@@ -40,7 +40,10 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
-    implementation("dev.jorel:commandapi-paper-shade:12.0.0")
+    // CommandAPI 12.0.0 has no 26.3 handler and dies on the removed FuelValues class in CommandAPI.onLoad.
+    // Until a release with 26.3 support is published, ship a build of upstream dev/dev @ ed0069f
+    // (2026-09-19, "Update to 26.3"). Switch back to "dev.jorel:commandapi-paper-shade:<ver>" then.
+    implementation(files("libs/commandapi-paper-shade-12.0.1-ed0069f.jar"))
 
     compileOnly("com.ticxo.modelengine:ModelEngine:R4.1.0")
     compileOnly("io.github.toxicity188:bettermodel-api:2.2.0")
@@ -49,7 +52,10 @@ dependencies {
     compileOnly(files("libs/geyserutils-spigot-1.0-SNAPSHOT.jar"))
     compileOnly("org.geysermc.floodgate:api:2.2.4-SNAPSHOT")
 
-    implementation("com.github.retrooper:packetevents-spigot:2.13.0")
+    // 2.13.0 only knows server versions up to 26.2; on 26.3 it falls back to 1.8.8 and the plugin dies in
+    // onLoad with "NMS_ITEM_STACK_CLASS is null". 26.3 support landed in 2.14.0-SNAPSHOT (build 914+).
+    // Repin to the 2.14.0 release once it ships.
+    implementation("com.github.retrooper:packetevents-spigot:2.14.0-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit:3.0.2")
 
     implementation("org.reflections:reflections:0.10.2")
