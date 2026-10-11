@@ -1,6 +1,7 @@
 package re.imc.geysermodelengine.managers.model.modelhandler;
 
 import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.entity.Dummy;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
 import com.ticxo.modelengine.api.model.bone.type.Mount;
@@ -69,6 +70,18 @@ public class ModelEngineHandler implements ModelHandler {
     }
 
     // TODO ModelEngine canSee impl
+
+    /**
+     * Models on a ModelEngine Dummy (statues, stationary bosses) are seen as far
+     * as the Dummy's render radius, the same radius Java players get. Models on
+     * real entities keep the view-distance default.
+     */
+    @Override
+    public double viewDistance(Object model) {
+        if (!(model instanceof ActiveModel activeModel) || activeModel.getModeledEntity() == null) return 0;
+        if (activeModel.getModeledEntity().getBase() instanceof Dummy<?> dummy) return dummy.getRenderRadius();
+        return 0;
+    }
 
     @Override
     public void loadListeners() {

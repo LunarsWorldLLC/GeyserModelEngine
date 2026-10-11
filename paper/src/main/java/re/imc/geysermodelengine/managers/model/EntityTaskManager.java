@@ -84,7 +84,9 @@ public class EntityTaskManager {
 
         if (playerLocation.getWorld() != entityLocation.getWorld()) return false;
         if (!plugin.getModelManager().getModelHandler().canSee(player, model)) return false;
-        if (playerLocation.distanceSquared(entityLocation) > player.getSendViewDistance() * player.getSendViewDistance() * 48) return false;
+
+        double range = Math.max(player.getSendViewDistance() * Math.sqrt(48), plugin.getModelManager().getModelHandler().viewDistance(model));
+        if (playerLocation.distanceSquared(entityLocation) > range * range) return false;
 
         return true;
     }

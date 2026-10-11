@@ -25,4 +25,13 @@ public interface ModelHandler {
     default boolean canSee(Player player, Object model) {
         return true;
     }
+
+    /**
+     * Horizontal distance (blocks) the model should stay visible at for Bedrock
+     * players when it is further than the view-distance based default;
+     * 0 keeps the default.
+     */
+    default double viewDistance(Object model) {
+        return 0;
+    }
 }
